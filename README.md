@@ -44,7 +44,7 @@ import (
 
 func main() {
     numbers := []float64{1, 2, 3, 4, 5, 6, 7}
-    mean, err := trimmedMean.TrimmedMean(numbers, 1, 1)
+    mean, err := trimmedMean.TrimmedMean(numbers, 10, 10)
     if err != nil {
         fmt.Println("Error:", err)
     } else {
