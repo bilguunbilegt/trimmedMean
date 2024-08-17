@@ -1,6 +1,3 @@
-Here's the updated `README.md` with the GitHub link and consistent use of `trimmedMean`:
-
-```markdown
 # trimmedMean
 
 The `trimmedMean` package provides a function to calculate the trimmed mean of a slice of floating-point numbers. The trimmed mean is a measure of central tendency that excludes a specified number of elements from both the lower and upper ends of the data set before computing the mean.
@@ -94,17 +91,6 @@ go test
 
 This will execute the tests defined in `trimmedMean_test.go` and report any failures.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## GitHub Repository
 
-You can find the source code and contribute to the project on GitHub: [https://github.com/bilguunbilegt/trimmedMean](https://github.com/bilguunbilegt/trimmedMean)
-```
-
-### Summary of Changes:
-- **GitHub Link**: Added the link to your GitHub repository at the end of the README.
-- **Consistent Naming**: Updated all instances to use `trimmedMean` instead of `TrimmedMean`. 
-
-This README now aligns with your preferences and provides clear information for anyone using or contributing to your package.
+You can find the source code on GitHub: [https://github.com/bilguunbilegt/trimmedMean](https://github.com/bilguunbilegt/trimmedMean)
