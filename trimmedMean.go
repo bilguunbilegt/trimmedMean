@@ -5,7 +5,7 @@ import (
 	"sort"
 )
 
-func TrimmedMean(numbers []float64, trim ...int) (float64, error) {
+func trimmedMean(numbers []float64, trim ...int) (float64, error) {
 	if len(trim) == 0 || len(trim) > 2 {
 		return 0, fmt.Errorf("invalid number of trimming arguments")
 	}
