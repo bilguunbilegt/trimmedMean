@@ -20,44 +20,51 @@ func TestTrimmedMean(t *testing.T) {
 			expectError: false,
 		},
 		{
-			name:        "Trim 1 from both ends",
+			name:        "Trim 5% from both ends",
 			numbers:     []float64{1, 2, 3, 4, 5, 6, 7},
-			trim:        []int{1, 1},
+			trim:        []int{5, 5},
 			expected:    4.0,
 			expectError: false,
 		},
 		{
-			name:        "Trim 2 from both ends",
+			name:        "Trim 10% from both ends",
 			numbers:     []float64{1, 2, 3, 4, 5, 6, 7},
-			trim:        []int{2, 2},
+			trim:        []int{10, 10},
 			expected:    4.0,
 			expectError: false,
 		},
 		{
-			name:        "Trim 3 from both ends",
+			name:        "Trim 20% from both ends",
 			numbers:     []float64{1, 2, 3, 4, 5, 6, 7},
-			trim:        []int{3, 3},
+			trim:        []int{20, 20},
 			expected:    4.0,
 			expectError: false,
 		},
 		{
-			name:        "Trim 4 from both ends, expect error",
+			name:        "Trim 40% from both ends",
 			numbers:     []float64{1, 2, 3, 4, 5, 6, 7},
-			trim:        []int{4, 4},
-			expected:    0.0,
-			expectError: true,
+			trim:        []int{40, 40},
+			expected:    4.0,
+			expectError: false,
 		},
 		{
-			name:        "Trim more elements than possible, expect error",
+			name:        "Trim more than available elements, expect error",
 			numbers:     []float64{1, 2, 3, 4, 5},
-			trim:        []int{3, 3},
+			trim:        []int{50, 50},
 			expected:    0.0,
 			expectError: true,
 		},
 		{
-			name:        "Invalid trim argument count, expect error",
-			numbers:     []float64{1, 2, 3, 4, 5, 6, 7},
-			trim:        []int{},
+			name:        "Trim with invalid percentage, expect error",
+			numbers:     []float64{1, 2, 3, 4, 5},
+			trim:        []int{-10}, // Negative percentage
+			expected:    0.0,
+			expectError: true,
+		},
+		{
+			name:        "Trim with invalid percentage, expect error",
+			numbers:     []float64{1, 2, 3, 4, 5},
+			trim:        []int{110}, // Percentage over 100
 			expected:    0.0,
 			expectError: true,
 		},
@@ -65,11 +72,8 @@ func TestTrimmedMean(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			trimFloats := make([]float64, len(tt.trim))
-			for i, v := range tt.trim {
-				trimFloats[i] = float64(v)
-			}
-			result, err := TrimmedMean(tt.numbers, trimFloats...)
+			result, err := TrimmedMean(tt.numbers, tt.trim...)
+
 			if tt.expectError {
 				if err == nil {
 					t.Errorf("expected an error but got none")
