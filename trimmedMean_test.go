@@ -65,7 +65,11 @@ func TestTrimmedMean(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := TrimmedMean(tt.numbers, tt.trim...)
+			trimFloats := make([]float64, len(tt.trim))
+			for i, v := range tt.trim {
+				trimFloats[i] = float64(v)
+			}
+			result, err := TrimmedMean(tt.numbers, trimFloats...)
 			if tt.expectError {
 				if err == nil {
 					t.Errorf("expected an error but got none")

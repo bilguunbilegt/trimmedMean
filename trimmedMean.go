@@ -5,7 +5,7 @@ import (
 	"sort"
 )
 
-func TrimmedMean(numbers []float64, trim ...int) (float64, error) {
+func TrimmedMean(numbers []float64, trim ...float64) (float64, error) {
 	if len(trim) == 0 || len(trim) > 2 {
 		return 0, fmt.Errorf("invalid number of trimming arguments")
 	}
@@ -13,23 +13,30 @@ func TrimmedMean(numbers []float64, trim ...int) (float64, error) {
 	// Sort the numbers in ascending order
 	sort.Float64s(numbers)
 
-	// Determine the number of elements to trim from the lower and upper extremes of the sorted numbers array
+	// Determine the percentage of elements to trim from the lower and upper extremes of the sorted numbers array
 	lowerTrim := trim[0]
 	upperTrim := lowerTrim
 	if len(trim) == 2 {
 		upperTrim = trim[1]
 	}
 
-	// Calculate indices for slicing the array to remove the lower and upper extremes
+	// Calculate number of elements to trim
 	n := len(numbers)
-	lowerIndex := lowerTrim
-	upperIndex := n - upperTrim
+	if lowerTrim < 0 || lowerTrim > 1 || upperTrim < 0 || upperTrim > 1 {
+		return 0, fmt.Errorf("trimming percentages must be between 0 and 1")
+	}
+	lowerCount := int(float64(n) * lowerTrim)
+	upperCount := int(float64(n) * upperTrim)
 
-	if lowerIndex >= upperIndex || lowerIndex < 0 || upperIndex > n {
+	// Calculate indices for slicing the array to remove the lower and upper extremes
+	lowerIndex := lowerCount
+	upperIndex := n - upperCount
+
+	if lowerIndex >= upperIndex {
 		return 0, fmt.Errorf("invalid trimming values, resulting in no elements or out-of-bounds indices")
 	}
 
-	// Check if at least one element remains after trimming the array and return an error if not the case (i.e. the array is empty)
+	// Check if at least one element remains after trimming the array and return an error if not the case
 	if upperIndex-lowerIndex < 1 {
 		return 0, fmt.Errorf("trimming results in fewer than one element")
 	}
